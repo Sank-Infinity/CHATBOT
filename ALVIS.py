@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
          
         if 'who creates you' in query:
-            speak('I Have created by THE MECHANIC.......I CALL HIM AS BOSSS......')
+            speak('I am created by THE MECHANIC.......I CALL HIM AS BOSSS......')
 
         if 'how are you' in query:
             min = 0
