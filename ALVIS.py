@@ -1,3 +1,4 @@
+#Importing Required libraries 
 import pyttsx3
 import datetime
 import speech_recognition as sr
@@ -9,17 +10,14 @@ import webbrowser
 import os
 import smtplib
 import array as arr
+ 
+machine = pyttsx3.init('sapi5')
+voices = machine.getProperty('voices')
+machine.setProperty('voice', voices[0].id)
 
-
-engine = pyttsx3.init('sapi5')
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-
-
-def speak(audio):
-    engine.say(audio)
-    engine.runAndWait()
-
+def speak(audio):  
+    machine.say(audio)
+    machine.runAndWait()
 
 class Circle():
     pi = int(3.14)
@@ -48,15 +46,6 @@ class Rec():
         print("Area of Rectangle is "+ str(area))
         speak("Area of rectangle is " + str(area))
 
-
-def sendEmail(to, content):
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.ehlo()
-    server.starttls()
-    server.login('usergroup58013@gmail.com', 'user@group0865')
-    server.sendmail('kalesanket1999@gmail.com', to, content)
-    server.close()
-
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour >= 0 and hour < 12:
@@ -75,7 +64,6 @@ def takecommand():
         r.pause_threshold = 1
         r.dynamic_energy_threshold = 50
         audio = r.listen(source)
-
     try:
         print("Recognizing......")
         query = r.recognize_google(audio, language="en-in")
@@ -162,7 +150,7 @@ if __name__ == "__main__":
 
         if 'play music' in query:
             speak("OPening Melody.......")
-            music_dir = 'C:\\Users\\sanket kale\\Music'
+            music_dir = 'Insert Path'
             song = os.listdir(music_dir)
             length = len(song)
             min = 0
@@ -170,11 +158,9 @@ if __name__ == "__main__":
             p = int(random.randint(min, max))
             os.startfile(os.path.join(music_dir, song[p]))
 
-        if 'who' and 'creator' in query:
-            speak('Mister SANKET KAALAEE.......I CALL HIM AS BOSSS......')
-
+         
         if 'who creates you' in query:
-            speak('Mister SANKET KAALAEE.......I CALL HIM AS BOSSS......')
+            speak('I Have created by THE MECHANIC.......I CALL HIM AS BOSSS......')
 
         if 'how are you' in query:
             min = 0
@@ -189,17 +175,7 @@ if __name__ == "__main__":
             if reply=='3':
                 speak("NOTHING. AS USUAL....")
 
-        if 'send' and 'mail' in query:
-            try:
-                speak("Enter email address here....")
-                to = input('Enter email address')
-                speak("What should I say?")
-                content = takecommand()
-                sendEmail(to, content)
-                speak("Email has been sent!")
-            except Exception as e:
-                print(e)
-                speak("Sorry BOSS. I am not able to send this email Because google is not giving permission to less priority app service.....")
+        
 
         if 'what' and 'time' in query:
             strTime = datetime.datetime.now().strftime("%H:%M:%S")
@@ -240,7 +216,7 @@ if __name__ == "__main__":
             temp= takecommand()
             if 'desktop' in temp:
                 speak("got it BOSS.....")
-                os.chdir(r"C:\Users\sanket kale\Desktop")
+                os.chdir(r"Insert Path")
                 speak("Your directory bosss...")
                 print(os.getcwd())
                 speak("which name should i give to folder...")
@@ -249,7 +225,7 @@ if __name__ == "__main__":
                 speak("i am ready with your folder, please check it....")
             if 'downloads' in temp:
                 speak("got it BOSS.....")
-                os.chdir(r"C:\Users\sanket kale\Downloads")
+                os.chdir(r"Insert Path")
                 speak("Your directory bosss...")
                 print(os.getcwd())
                 speak("which name should i give to folder...")
@@ -258,7 +234,7 @@ if __name__ == "__main__":
                 speak("i am ready with your folder, please check it....")
             if 'documents' in temp:
                 speak("got it BOSS.....")
-                os.chdir(r"C:\Users\sanket kale\Documents")
+                os.chdir(r"Insert Path")
                 speak("Your directory bosss...")
                 print(os.getcwd())
                 speak("which name should i give to folder...")
@@ -267,7 +243,7 @@ if __name__ == "__main__":
                 speak("i am ready with your folder, please check it....")
             if 'videos' in temp:
                 speak("got it BOSS.....")
-                os.chdir(r"C:\Users\sanket kale\videos")
+                os.chdir(r"Insert Path")
                 speak("Your directory bosss...")
                 print(os.getcwd())
                 speak("which name should i give to folder...")
@@ -279,44 +255,33 @@ if __name__ == "__main__":
             speak("Locate directory if required....")
             temp1 = takecommand()
             if 'desktop' in temp1:
-                os.chdir(r"C:\Users\sanket kale\videos")
-                print(os.listdir(r"C:\Users\sanket kale\videos"))
+                os.chdir(r"Insert path")
+                print(os.listdir(r"Insert Path"))
                 speak("Which file do you want to open ?")
                 name1 = takecommand()
                 os.startfile(name1)
                 speak("Opening file in few seconds........")
 
-        if 'open' and 'word' and 'list' in query:
-                os.chdir(r"C:\Users\sanket kale\Desktop\CN\GRE")
-                print(os.listdir())
-                os.startfile("wordlist.docx")
-
-        if 'open' and 'practice' and 'questions' in query:
-                os.chdir(r"C:\Users\sanket kale\Desktop\CN\GRE")
-                print(os.listdir())
-                os.startfile("practice.pdf")
+         
 
         if 'show' and 'movie' in query:
-            os.chdir(r"C:\Users\sanket kale\Videos\videos")
-            print(os.listdir(r"C:\Users\sanket kale\Videos\videos"))
+            os.chdir(r"Insert Path")
+            print(os.listdir(r"Insert path"))
             speak("WHich movie you would like to see....?")
             movie = takecommand()
             if 'Iron Man 1' in movie:
-                os.chdir(r"C:\Users\sanket kale\Videos\videos\MCU\Mr.STARK")
-                print(os.listdir())
-                os.startfile("IronMan.1.mkv")
+                os.chdir(r"Insert Path")
+                os.startfile("Inset file name")
             if 'Iron Man 2' in movie:
-                os.chdir(r"C:\Users\sanket kale\Videos\videos\MCU\Mr.STARK")
-                print(os.listdir())
-                os.startfile("IronMan.2.mkv")
+                os.chdir(r"Insert Path")
+                os.startfile("Inset file name")
             if 'Iron Man 3' in movie:
-                os.chdir(r"C:\Users\sanket kale\Videos\videos\MCU\Mr.STARK")
-                print(os.listdir())
-                os.startfile("IronMan.3.mkv")
+                os.chdir(r"Insert Path")
+                os.startfile("Inset file name")
             if 'strange' in movie:
-                os.chdir(r"C:\Users\sanket kale\Videos\videos\MCU")
-                os.startfile("16-Doctor Strange.mkv")
-                print(os.listdir())
+                os.chdir(r"Insert Path")
+                os.startfile("Inset file name")
+               
 
 
         if 'q and a' in query:
